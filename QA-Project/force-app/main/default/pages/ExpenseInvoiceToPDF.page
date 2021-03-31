@@ -1,0 +1,233 @@
+<apex:page standardController="Course_nvoices__c" extensions="ExpenseInvController" action="{!saveInvoiceAsPdf}" renderAs="pdf" showHeader="true" applyBodyTag="false" >
+   <head>
+        <style>
+            body {
+        font-family: Helvetica;
+        float: right;
+    }
+
+    h1{
+        text-align: center;
+    }  
+
+    .personalInfo{
+        font-size: 180%;
+        color: gray;
+        width: 80%;       
+        text-align: right;
+        margin-left: 140px;
+        
+    }
+
+    .InvText{
+        font-size: 50%;
+    }
+
+   
+
+    #mailToBillTo{
+        width: 100%;
+        float: left;
+        
+    }
+
+    #mailTo{
+        width: 35%;
+        margin-right: 3%;
+        float: left;
+
+    }
+
+    #mailToContent{
+       
+        margin-right: 5%;
+        float:right;
+        margin-top:-22%;
+        
+    }
+
+    #billTo{
+        width: 35%;
+        float: right;
+     
+    }
+
+    #billToContent{
+        
+        margin-right: 10%;
+        float:right;
+        margin-top:-22%;
+    }
+    .invoiceInfo{
+        width: 100%;
+        margin-top: 10%;
+        float: right;
+        
+    }
+
+    .LineItems {
+        width: 100%;
+        margin-top: 10%;
+        float: right;
+        
+    }
+
+    .column{
+        padding: 2px 5px 2px 5px;
+    }
+
+    .invoiceTable{
+        border: 2px solid gray;
+        float: left;
+        width: 98%;
+    }
+
+    .tableTitle {
+        border: 2px solid gray;
+        padding: 2px;
+        float: left;
+        margin: 2px;
+        
+    }
+
+    .Location{
+        width: 15%;
+    }
+
+    .InvoiceNumber{
+        width: 18%;
+    }
+
+    .CourseName{
+        width: 40%;
+    }
+
+    .CourseOpp{
+        width: 20%;
+    }
+
+    .FooterInfo{
+        float: left;
+        margin-top: 10%;
+        /* width: 100%; */
+        
+    }
+
+    .footerText{
+        border: 1px solid gray;
+        
+        
+    }
+    .latinModern{font-family:'latin_modern_roman10_regular','Times New Roman',serif;font-style:normal;font-weight:500}
+    
+        
+        </style>
+    </head>
+    <body>
+
+        <apex:form >
+    
+  </apex:form>
+        <div class="personalInfo">
+            <h1 class="latinModern">Expense Invoice</h1>
+                <apex:outputText value="Invoice date: {!Course_nvoices__c.invoice_submitted_date__c}"/><br/>
+                <apex:outputText value="Invoice number: {!Course_nvoices__c.Name}"/>
+        </div>
+
+        <div id="mailToBillTo">
+            
+            <div id="mailTo">
+                <p>Mail To:</p>                
+                <div id="mailToContent">
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.Name}"/><br/>                    
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.BillingStreet}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.BillingCity}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.BillingState}"/><br/>                    
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.BillingCountry}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.BillingPostalCode}"/><br/>
+                </div>
+            </div>
+            <div id="billTo">
+                <p>Bill To:</p>
+                <div id="billToContent">
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.Name}"/><br/>                    
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.ShippingStreet}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.ShippingCity}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.ShippingState}"/><br/>                    
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.ShippingCountry}"/><br/>
+                    <apex:outputText value="{!Course_nvoices__c.Course_Opportunity__r.Account.ShippingPostalCode}"/><br/>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="invoiceInfo">
+            <apex:pageBlock >
+                <apex:pageBlockTable value="{!Course_nvoices__c}" var="ci" border="2px solid gray" >                                     
+                    <apex:column headerClass="column" value="{!ci.Name}"/>
+                    <apex:column headerClass="column" value="{!ci.Location__c}"/>   
+                    <apex:column headerClass="column" value="{!ci.Course_Opportunity__r.Course_Name__c}"/>
+                    <apex:column headerClass="column" value="{!ci.Course_Opportunity__c}"/>
+                </apex:pageBlockTable>
+
+            </apex:pageBlock>
+            
+        </div>
+
+        <div class="LineItems">
+            <apex:pageBlock>
+                <apex:pageBlockTable value="{!ILIListwithMileage}" var="ili" width="100%" border="2px solid gray">
+                    <apex:column value="{!ili.date__c}"/>
+                    <apex:column value="{!ili.Description__c}"/>
+                    <apex:column value="{!ili.Distance__c}"/>                   
+                    <apex:column value="{!ili.Mileage_Rate__c}"/>
+                    <apex:column value="{!ili.Mileage_cost__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </div>
+
+        <div class="Non Mileage LineItems">
+            <apex:pageBlock>
+                <apex:pageBlockTable value="{!ILIListwithoutMileage}" var="ili" width="100%" border="2px solid gray">
+                    <apex:column value="{!ili.date__c}"/>
+                    <apex:column value="{!ili.Description__c}"/>             
+                    <apex:column value="{!ili.Amount_del__c}"/>
+                    <apex:column value="{!ili.Total_Amount_del__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </div>
+
+        <div class="FooterInfo">
+            <apex:pageBlock>
+                <apex:pageBlockSection>
+                    
+                    <apex:outputPanel>
+                        <div class="footerText">
+                            <apex:outputText value="Please quote {!Course_nvoices__c.Name} as the payment reference"/><br/>
+                            
+                        </div>
+                    
+                        <div class="footerText">
+                            <apex:outputText value="Account Name : {!Course_nvoices__c.Course_Opportunity__r.Account.Name}"/><br/>
+                            
+                        </div>
+
+                        <div class="footerText">
+                       
+                            <apex:outputText value="Instructor : {!Course_nvoices__c.Course_Opportunity__r.Instructor__r.Name}"/><br/>
+
+                        </div>
+
+                        <div class="footerText">
+                            
+                            <apex:outputText value="test"/>
+                        </div>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </div>
+        
+
+    </body>
+
+</apex:page>

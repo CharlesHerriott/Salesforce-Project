@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Courses</fullName>
+    <columns>NAME</columns>
+    <columns>Instructor__c</columns>
+    <columns>CourseLength__c</columns>
+    <columns>Is_Technical__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>Courses</label>
+</ListView>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Formatted_Invoices</fullName>
+    <columns>NAME</columns>
+    <columns>Expense_Total_Cost__c</columns>
+    <columns>Service_Total_Cost__c</columns>
+    <columns>Withdrawal_Amount__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>Formatted Invoices</label>
+</ListView>
